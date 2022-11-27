@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/bin/bash
 pkg install wget openssl-tool proot -y
 folder=ubuntu-fs
 if [ -d "$folder" ]; then
@@ -28,10 +28,11 @@ if [ "$first" != 1 ];then
 	cd "$cur"
 fi
 mkdir -p ubuntu-binds
-bin=start-ubuntu.sh
+bin=ubuntu
 echo "writing launch script"
 cat > $bin <<- EOM
 #!/bin/bash
+cur=`pwd`
 cd \$(dirname \$0)
 pulseaudio --start
 ## For rooted user: pulseaudio --start --system
@@ -40,15 +41,15 @@ unset LD_PRELOAD
 command="proot"
 command+=" --link2symlink"
 command+=" -0"
-command+=" -r $folder"
-if [ -n "\$(ls -A ubuntu-binds)" ]; then
-    for f in ubuntu-binds/* ;do
+command+=" -r ${cur}/$folder"
+if [ -n "\$(ls -A ${cur}/ubuntu-binds)" ]; then
+    for f in ${cur}/ubuntu-binds/* ;do
       . \$f
     done
 fi
 command+=" -b /dev"
 command+=" -b /proc"
-command+=" -b ubuntu-fs/root:/dev/shm"
+command+=" -b ${cur}/ubuntu-fs/root:/dev/shm"
 ## uncomment the following line to have access to the home directory of termux
 #command+=" -b /data/data/com.termux/files/home:/root"
 ## uncomment the following line to mount /sdcard directly to / 
@@ -70,9 +71,7 @@ fi
 EOM
 
 echo "Setting up pulseaudio so you can have music in distro."
-
 pkg install pulseaudio -y
-
 if grep -q "anonymous" ~/../usr/etc/pulse/default.pa;then
     echo "module already present"
 else
@@ -87,7 +86,8 @@ echo "export PULSE_SERVER=127.0.0.1" >> ubuntu-fs/etc/profile
 echo "Setting Pulseaudio server to 127.0.0.1"
 
 termux-fix-shebang $bin | echo "fixing shebang of $bin"
-chmod +x $bin | echo "making $bin executable"
+mv $bin ../usr/bin
+chmod +x ../usr/bin/$bin | echo "making $bin executable"
 rm -rf $tarball | echo "removing image for some space"
 echo "You can now launch Ubuntu with the ./${bin} script"
 ls
