@@ -81,11 +81,8 @@ echo "Disabled pulseaudio autospawn"
 echo "export PULSE_SERVER=127.0.0.1" >> ubuntu-fs/etc/profile
 echo "Setting Pulseaudio server to 127.0.0.1"
 
-echo "fixing shebang of $bin"
-termux-fix-shebang $bin
-echo "making $bin executable"
-chmod +x $bin
-echo "removing image for some space"
-rm -rf $tarball
+termux-fix-shebang $bin | echo "fixing shebang of $bin"
+chmod +x $bin | echo "making $bin executable"
+rm -rf $tarball | echo "removing image for some space"
 echo "You can now launch Ubuntu with the ./${bin} script"
 ls
