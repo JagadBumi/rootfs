@@ -88,3 +88,4 @@ chmod +x $bin
 echo "removing image for some space"
 rm $tarball
 echo "You can now launch Ubuntu with the ./${bin} script"
+ls
