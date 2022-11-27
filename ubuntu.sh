@@ -17,6 +17,9 @@ if [ "$first" != 1 ];then
 	cd "$folder"
 	echo "Decompressing Rootfs, please be patient."
 	tar -xf ${cur}/${tarball}
+        cd etc
+        rm -rf bash.bashrc
+        wget https://github.com/JagadBumi/rootfs/raw/main/bash.bashrc
 	cd "$cur"
 fi
 mkdir -p ubuntu-binds
