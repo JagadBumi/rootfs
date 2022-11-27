@@ -19,7 +19,7 @@ if [ "$first" != 1 ];then
 	tar -xf ${cur}/${tarball}
         cd etc
         rm -rf bash.bashrc
-        wget https://github.com/JagadBumi/rootfs/raw/main/bash.bashrc
+        wget https://raw.githubusercontent.com/JagadBumi/rootfs/main/bash.bashrc
 	cd "$cur"
 fi
 mkdir -p ubuntu-binds
