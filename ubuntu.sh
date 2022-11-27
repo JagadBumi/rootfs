@@ -8,9 +8,14 @@ fi
 tarball="ubuntu-rootfs.tar.xz"
 if [ "$first" != 1 ];then
 	if [ ! -f $tarball ]; then
-		echo "Download Rootfs, this may take a while base on your internet speed."
 		arch=`dpkg --print-architecture`
-		wget "https://github.com/CypherpunkArmory/UserLAnd-Assets-Ubuntu/releases/download/v0.0.6/${arch}-rootfs.tar.gz" -O $tarball
+		case $arch in arm|arm64|x86|x86_64)
+		    echo "Download Rootfs, this may take a while base on your internet speed."
+		    wget "https://github.com/CypherpunkArmory/UserLAnd-Assets-Ubuntu/releases/download/v0.0.6/${arch}-rootfs.tar.gz" -O $tarball;;
+		    *)
+		    echo "Rootfs not found."
+		    exit;;
+		esac
 	fi
 	cur=`pwd`
 	mkdir -p "$folder"
