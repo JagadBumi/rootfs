@@ -86,6 +86,6 @@ termux-fix-shebang $bin
 echo "making $bin executable"
 chmod +x $bin
 echo "removing image for some space"
-rm $tarball
+rm -rf $tarball
 echo "You can now launch Ubuntu with the ./${bin} script"
 ls
