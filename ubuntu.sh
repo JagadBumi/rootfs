@@ -3,11 +3,12 @@ pkg install wget openssl-tool proot -y
 folder=ubuntu-fs
 if [ -d "$folder" ]; then
 	first=1
-	echo "skipping downloading"
+	echo "Ubuntu is installed."
+	exit
 fi
 arch=`dpkg --print-architecture`
 tarball="${arch}-rootfs.tar.gz"
-if [ "$first" != 1 ];then
+if [ "$first" != 1 ]; then
 	if [ ! -f $tarball ]; then
 		case $arch in arm|arm64|x86|x86_64)
 		    echo "Download Rootfs, this may take a while base on your internet speed."
