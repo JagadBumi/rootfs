@@ -40,15 +40,15 @@ unset LD_PRELOAD
 command="proot"
 command+=" --link2symlink"
 command+=" -0"
-command+=" -r ubuntu-fs"
-if [ -n "\$(ls -A ubuntu-binds)" ]; then
-    for f in ubuntu-binds/* ;do
+command+=" -r /data/data/com.termux/files/home/ubuntu-fs"
+if [ -n "\$(ls -A /data/data/com.termux/files/home/ubuntu-binds)" ]; then
+    for f in /data/data/com.termux/files/home/ubuntu-binds/* ;do
       . \$f
     done
 fi
 command+=" -b /dev"
 command+=" -b /proc"
-command+=" -b ubuntu-fs/root:/dev/shm"
+command+=" -b /data/data/com.termux/files/home/ubuntu-fs/root:/dev/shm"
 ## uncomment the following line to have access to the home directory of termux
 #command+=" -b /data/data/com.termux/files/home:/root"
 ## uncomment the following line to mount /sdcard directly to / 
