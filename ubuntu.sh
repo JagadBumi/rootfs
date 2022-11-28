@@ -87,5 +87,5 @@ echo "Setting Pulseaudio server to 127.0.0.1"
 termux-fix-shebang $bin | echo "fixing shebang of $bin"
 chmod +x $bin | echo "making $bin executable"
 rm -rf $tarball | echo "removing image for some space"
-echo "You can launch Ubuntu with the ./${bin} command"
+echo "You can launch Ubuntu with the ./${bin} script"
 ls
