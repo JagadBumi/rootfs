@@ -11,7 +11,7 @@ if [ "$first" != 1 ];then
 		arch=`dpkg --print-architecture`
 		case $arch in arm|arm64|x86|x86_64)
 		    echo "Download Rootfs, this may take a while base on your internet speed."
-		    wget "https://github.com/CypherpunkArmory/UserLAnd-Assets-Debian/releases/download/v0.0.6/${arch}-rootfs.tar.gz" -O $tarball;;
+		    wget "https://github.com/CypherpunkArmory/UserLAnd-Assets-Debian/releases/download/v0.0.5/${arch}-rootfs.tar.gz" -O $tarball;;
 		    *)
 		    echo "Rootfs not found."
 		    exit;;
