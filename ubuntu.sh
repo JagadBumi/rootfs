@@ -21,7 +21,7 @@ if [ "$first" != 1 ];then
 	mkdir -p "$folder"
 	cd "$folder"
 	echo "Decompressing Rootfs, please be patient."
-	tar -xf ${cur}/${tarball}
+	proot --link2symlink tar -xf ${cur}/${tarball}
 	cd etc
 	rm -rf bash.bashrc
 	wget https://raw.githubusercontent.com/JagadBumi/rootfs/main/bash.bashrc
@@ -89,5 +89,5 @@ termux-fix-shebang $bin | echo "fixing shebang of $bin"
 mv $bin ../usr/bin
 chmod +x ../usr/bin/$bin | echo "making $bin executable"
 rm -rf $tarball | echo "removing image for some space"
-echo "You can now launch Ubuntu with the ./${bin} script"
+echo "You can now launch Ubuntu with the ${bin} command"
 ls
