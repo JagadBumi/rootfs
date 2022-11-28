@@ -5,10 +5,10 @@ if [ -d "$folder" ]; then
 	first=1
 	echo "skipping downloading"
 fi
-tarball="ubuntu-rootfs.tar.xz"
+arch=`dpkg --print-architecture`
+tarball="${arch}-rootfs.tar.gz"
 if [ "$first" != 1 ];then
 	if [ ! -f $tarball ]; then
-		arch=`dpkg --print-architecture`
 		case $arch in arm|arm64|x86|x86_64)
 		    echo "Download Rootfs, this may take a while base on your internet speed."
 		    wget "https://github.com/CypherpunkArmory/UserLAnd-Assets-Ubuntu/releases/download/v0.0.6/${arch}-rootfs.tar.gz" -O $tarball;;
