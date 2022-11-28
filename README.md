@@ -16,3 +16,10 @@
 <pre><code>./start-debian.sh</code></pre>
 <pre><code>apt update && apt upgrade</code></pre>
 <pre><code>apt-get update && apt-get upgrade</code></pre>
+
+# How to open storage ubuntu debian
+<pre><code>cd /sdcard</code></pre>
+
+OR
+
+<pre><code>cd /storage/emulated/0</code></pre>
