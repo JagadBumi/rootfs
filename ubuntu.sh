@@ -32,7 +32,7 @@ bin=ubuntu
 echo "writing launch script"
 cat > $bin <<- EOM
 #!/bin/bash
-cur=`pwd`
+cur=/data/data/com.termux/files/usr
 cd \$(dirname \$0)
 pulseaudio --start
 ## For rooted user: pulseaudio --start --system
@@ -41,15 +41,15 @@ unset LD_PRELOAD
 command="proot"
 command+=" --link2symlink"
 command+=" -0"
-command+=" -r ${cur}/$folder"
-if [ -n "\$(ls -A ${cur}/ubuntu-binds)" ]; then
-    for f in ${cur}/ubuntu-binds/* ;do
+command+=" -r $cur/$folder"
+if [ -n "\$(ls -A $cur/ubuntu-binds)" ]; then
+    for f in $cur/ubuntu-binds/* ;do
       . \$f
     done
 fi
 command+=" -b /dev"
 command+=" -b /proc"
-command+=" -b ${cur}/ubuntu-fs/root:/dev/shm"
+command+=" -b $cur/ubuntu-fs/root:/dev/shm"
 ## uncomment the following line to have access to the home directory of termux
 #command+=" -b /data/data/com.termux/files/home:/root"
 ## uncomment the following line to mount /sdcard directly to / 
@@ -86,8 +86,9 @@ echo "export PULSE_SERVER=127.0.0.1" >> ubuntu-fs/etc/profile
 echo "Setting Pulseaudio server to 127.0.0.1"
 
 termux-fix-shebang $bin | echo "fixing shebang of $bin"
-mv $bin ../usr/bin
-chmod +x ../usr/bin/$bin | echo "making $bin executable"
+mv $bin ~/../usr/bin
+mv ubuntu-binds ~/../usr
+mv ubuntu-fs ~/../usr
+chmod +x ~/../usr/bin/$bin | echo "making $bin executable"
 rm -rf $tarball | echo "removing image for some space"
-echo "You can now launch Ubuntu with the ${bin} command"
-ls
+echo "You can launch Ubuntu with the ${bin} command"
