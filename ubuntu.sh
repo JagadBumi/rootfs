@@ -1,5 +1,4 @@
 #!/bin/bash
-pkg install wget openssl-tool proot -y
 folder=ubuntu-fs
 if [ -d "$folder" ]; then
 	first=1
