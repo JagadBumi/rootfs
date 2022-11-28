@@ -21,14 +21,14 @@ if [ "$first" != 1 ];then
 	mkdir -p "$folder"
 	cd "$folder"
 	echo "Decompressing Rootfs, please be patient."
-	proot --link2symlink tar -xf ${cur}/${tarball}
+	tar -xf ${cur}/${tarball}
 	cd etc
 	rm -rf bash.bashrc
 	wget https://raw.githubusercontent.com/JagadBumi/rootfs/main/bash.bashrc
 	cd "$cur"
 fi
 mkdir -p ubuntu-binds
-bin=ubuntu
+bin=start-ubuntu.sh
 echo "writing launch script"
 cat > $bin <<- EOM
 #!/bin/bash
@@ -40,15 +40,15 @@ unset LD_PRELOAD
 command="proot"
 command+=" --link2symlink"
 command+=" -0"
-command+=" -r /data/data/com.termux/files/usr/$folder"
-if [ -n "\$(ls -A /data/data/com.termux/files/usr/ubuntu-binds)" ]; then
-    for f in /data/data/com.termux/files/usr/ubuntu-binds/* ;do
+command+=" -r ubuntu-fs"
+if [ -n "\$(ls -A ubuntu-binds)" ]; then
+    for f in ubuntu-binds/* ;do
       . \$f
     done
 fi
 command+=" -b /dev"
 command+=" -b /proc"
-command+=" -b /data/data/com.termux/files/usr/ubuntu-fs/root:/dev/shm"
+command+=" -b ubuntu-fs/root:/dev/shm"
 ## uncomment the following line to have access to the home directory of termux
 #command+=" -b /data/data/com.termux/files/home:/root"
 ## uncomment the following line to mount /sdcard directly to / 
@@ -85,9 +85,7 @@ echo "export PULSE_SERVER=127.0.0.1" >> ubuntu-fs/etc/profile
 echo "Setting Pulseaudio server to 127.0.0.1"
 
 termux-fix-shebang $bin | echo "fixing shebang of $bin"
-mv $bin ~/../usr/bin
-mv ubuntu-binds ~/../usr
-mv ubuntu-fs ~/../usr
-chmod +x ~/../usr/bin/$bin | echo "making $bin executable"
+chmod +x $bin | echo "making $bin executable"
 rm -rf $tarball | echo "removing image for some space"
-echo "You can launch Ubuntu with the ${bin} command"
+echo "You can launch Ubuntu with the ./${bin} command"
+ls
