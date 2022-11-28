@@ -32,7 +32,6 @@ bin=ubuntu
 echo "writing launch script"
 cat > $bin <<- EOM
 #!/bin/bash
-cur=/data/data/com.termux/files/usr
 cd \$(dirname \$0)
 pulseaudio --start
 ## For rooted user: pulseaudio --start --system
@@ -41,15 +40,15 @@ unset LD_PRELOAD
 command="proot"
 command+=" --link2symlink"
 command+=" -0"
-command+=" -r $cur/$folder"
-if [ -n "\$(ls -A $cur/ubuntu-binds)" ]; then
-    for f in $cur/ubuntu-binds/* ;do
+command+=" -r /data/data/com.termux/files/usr/$folder"
+if [ -n "\$(ls -A /data/data/com.termux/files/usr/ubuntu-binds)" ]; then
+    for f in /data/data/com.termux/files/usr/ubuntu-binds/* ;do
       . \$f
     done
 fi
 command+=" -b /dev"
 command+=" -b /proc"
-command+=" -b $cur/ubuntu-fs/root:/dev/shm"
+command+=" -b /data/data/com.termux/files/usr/ubuntu-fs/root:/dev/shm"
 ## uncomment the following line to have access to the home directory of termux
 #command+=" -b /data/data/com.termux/files/home:/root"
 ## uncomment the following line to mount /sdcard directly to / 
