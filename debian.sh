@@ -2,18 +2,20 @@
 folder=debian-fs
 if [ -d "$folder" ]; then
 	first=1
-	echo "Debian is installed."
+	clear
+	echo "Debian is installed !"
 	exit
 fi
 arch=`dpkg --print-architecture`
-tarball="${arch}-rootfs.tar.gz"
+tarball="debian-${arch}-rootfs.tar.gz"
 if [ "$first" != 1 ]; then
 	if [ ! -f $tarball ]; then
 		case $arch in arm|arm64|x86|x86_64)
 		    echo "Download Rootfs, this may take a while base on your internet speed."
 		    wget "https://github.com/CypherpunkArmory/UserLAnd-Assets-Debian/releases/download/v0.0.5/${arch}-rootfs.tar.gz" -O $tarball;;
 		    *)
-		    echo "Rootfs not found."
+		    clear
+		    echo "Rootfs not found !"
 		    exit;;
 		esac
 	fi
@@ -29,7 +31,7 @@ if [ "$first" != 1 ]; then
 fi
 mkdir -p debian-binds
 bin=start-debian.sh
-echo "writing launch script"
+echo "Writing launch script"
 cat > $bin <<- EOM
 #!/bin/bash
 cd \$(dirname \$0)
@@ -81,11 +83,11 @@ echo "exit-idle-time = -1" >> ~/../usr/etc/pulse/daemon.conf
 echo "Modified pulseaudio timeout to infinite"
 echo "autospawn = no" >> ~/../usr/etc/pulse/client.conf
 echo "Disabled pulseaudio autospawn"
-echo "export PULSE_SERVER=127.0.0.1" >> ubuntu-fs/etc/profile
+echo "export PULSE_SERVER=127.0.0.1" >> /data/data/com.termux/files/home/ubuntu-fs/etc/profile
 echo "Setting Pulseaudio server to 127.0.0.1"
 
-termux-fix-shebang $bin | echo "fixing shebang of $bin"
-chmod +x $bin | echo "making $bin executable"
-rm -rf $tarball | echo "removing image for some space"
+termux-fix-shebang $bin | echo "Fixing shebang of $bin"
+chmod +x $bin | echo "Making $bin executable"
+rm -rf $tarball | echo "Removing image for some space"
 echo "You can launch Debian with the ./${bin} script"
 ls
