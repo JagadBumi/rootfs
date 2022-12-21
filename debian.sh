@@ -25,7 +25,7 @@ if [ "$first" != 1 ]; then
 	mkdir -p $folder
 	cd $folder
 	echo "Decompressing Rootfs, please be patient."
-	tar -xf $cur/$targz
+	tar -xvzf $cur/$targz
 	cd etc
 	rm -rf bash.bashrc
 	wget https://raw.githubusercontent.com/JagadBumi/rootfs/main/bash.bashrc
